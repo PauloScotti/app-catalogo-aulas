@@ -1,6 +1,7 @@
 import mongoose, {Schema} from "mongoose";
 
 const AulasSchema = new Schema({
+    idModulo: {type: String, required: true},
     nome: {type: String, required: true},
     modulo: {type: String, required: true},
     data: {type: String, required: true},

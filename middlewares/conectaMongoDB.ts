@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import type {RespostaPadraoMsg} from '../types/RespostaPadraMsg';
 
 export const conectaMongoDB = (handler : NextApiHandler) => 
-    async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg>) => {
+    async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg | any[]>) => {
 
     if(mongoose.connections[0].readyState) {
         return handler(req, res);
