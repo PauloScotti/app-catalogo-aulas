@@ -3,8 +3,8 @@ import type {RespostaPadraoMsg} from '../../types/RespostaPadraMsg';
 import type {CadastroRequisicao} from '../../types/CadastroRequisicao';
 import {UsuarioModel} from '../../models/UsuarioModel';
 import md5 from 'md5';
-import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { upload, uploadImagemCosmic } from '../../services/uploadImagemCosmic';
+import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import nc from 'next-connect';
 
 const handler = nc()
@@ -61,4 +61,4 @@ export const config = {
 }
 
 
-export default validarTokenJWT(handler);
+export default (conectaMongoDB(handler));

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { validarTokenJWT } from "../../middlewares/validarTokenJWT";
 import { RespostaPadraoMsg } from "../../types/RespostaPadraMsg";
 import { conectaMongoDB } from "../../middlewares/conectaMongoDB";
 import { ModulosModel } from "../../models/ModulosModel";
@@ -46,4 +45,4 @@ const endpointPesquisaModulos = async (req: NextApiRequest, res: NextApiResponse
     }
 }
 
-export default validarTokenJWT(conectaMongoDB(endpointPesquisaModulos));
+export default (conectaMongoDB(endpointPesquisaModulos));
