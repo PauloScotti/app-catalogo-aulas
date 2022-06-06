@@ -2,7 +2,6 @@ import type {NextApiRequest, NextApiResponse} from 'next';
 import type {RespostaPadraoMsg} from '../../types/RespostaPadraMsg';
 import type {CadastroRequisicao} from '../../types/CadastroRequisicao';
 import {UsuarioModel} from '../../models/UsuarioModel';
-import md5 from 'md5';
 import { upload, uploadImagemCosmic } from '../../services/uploadImagemCosmic';
 import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import nc from 'next-connect';
@@ -40,11 +39,14 @@ const handler = nc()
             }
 
             const image = await uploadImagemCosmic(req);
+
+            const bcrypt = require('bcryptjs');
+            const salt = bcrypt.genSaltSync(10);
     
             const usuarioASerSalvo = {
                 nome : usuario.nome,
                 email : usuario.email,
-                senha : md5(usuario.senha),
+                senha : bcrypt.hashSync(usuario.senha, salt),
                 nivelAcesso : usuario.nivelAcesso,
                 avatar: image?.media?.url
             }
