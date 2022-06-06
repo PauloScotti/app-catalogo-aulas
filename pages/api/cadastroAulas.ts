@@ -4,6 +4,7 @@ import {AulasModel} from '../../models/AulasModel';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import { ModulosModel } from '../../models/ModulosModel';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 
 
 const endpointCadastroAulas = async (
@@ -48,4 +49,4 @@ const endpointCadastroAulas = async (
     return res.status(405).json({erro : "Método informado não é válido! "});
 }
 
-export default validarTokenJWT(conectaMongoDB(endpointCadastroAulas));
+export default politicaCORS(validarTokenJWT(conectaMongoDB(endpointCadastroAulas)));

@@ -5,6 +5,7 @@ import {ModulosModel} from '../../models/ModulosModel';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import nc from 'next-connect';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 
 const handler = nc()
     .post(async (
@@ -33,4 +34,4 @@ const handler = nc()
 
     });
 
-export default validarTokenJWT(conectaMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectaMongoDB(handler)));

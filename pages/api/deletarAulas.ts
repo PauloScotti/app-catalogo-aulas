@@ -4,6 +4,7 @@ import {AulasModel} from '../../models/AulasModel';
 import { validarTokenJWT } from '../../middlewares/validarTokenJWT';
 import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import nc from 'next-connect';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 
 const handler = nc()
     .delete(async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg | any[]>) => {
@@ -33,4 +34,4 @@ export const config = {
     }
 }
 
-export default validarTokenJWT(conectaMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectaMongoDB(handler)));

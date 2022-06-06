@@ -4,6 +4,7 @@ import type {RespostaPadraoMsg} from '../../types/RespostaPadraMsg';
 import { UsuarioModel } from '../../models/UsuarioModel';
 import jwt from 'jsonwebtoken';
 import { LoginResposta } from '../../types/LoignResposta';
+import { politicaCORS } from '../../middlewares/politicaCORS';
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -53,4 +54,4 @@ const endpointLogin = async (
     return res.status(405).json({erro : "Método informado não é válido!"});
 }
 
-export default conectaMongoDB(endpointLogin);
+export default politicaCORS(conectaMongoDB(endpointLogin));

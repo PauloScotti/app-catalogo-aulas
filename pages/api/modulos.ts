@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { RespostaPadraoMsg } from "../../types/RespostaPadraMsg";
 import { conectaMongoDB } from "../../middlewares/conectaMongoDB";
 import { ModulosModel } from "../../models/ModulosModel";
+import { politicaCORS } from "../../middlewares/politicaCORS";
 
 const endpointPesquisaModulos = async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg | any[]>) => {
     try{
@@ -45,4 +46,4 @@ const endpointPesquisaModulos = async (req: NextApiRequest, res: NextApiResponse
     }
 }
 
-export default (conectaMongoDB(endpointPesquisaModulos));
+export default politicaCORS((conectaMongoDB(endpointPesquisaModulos)));

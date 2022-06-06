@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { RespostaPadraoMsg } from "../../types/RespostaPadraMsg";
 import { conectaMongoDB } from "../../middlewares/conectaMongoDB";
 import { AulasModel } from "../../models/AulasModel";
+import { politicaCORS } from "../../middlewares/politicaCORS";
 
 const aulasEndpoint = async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg> | any) => {
 
@@ -27,4 +28,4 @@ const aulasEndpoint = async (req: NextApiRequest, res: NextApiResponse<RespostaP
     return res.status(400).json({erro: 'Não foi possível obter os módulos'});
 }
 
-export default (conectaMongoDB(aulasEndpoint));
+export default politicaCORS(conectaMongoDB(aulasEndpoint));

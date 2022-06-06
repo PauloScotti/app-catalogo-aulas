@@ -4,6 +4,7 @@ import { RespostaPadraoMsg } from "../../types/RespostaPadraMsg";
 import { conectaMongoDB } from "../../middlewares/conectaMongoDB";
 import { AulasModel } from "../../models/AulasModel";
 import nc from 'next-connect';
+import { politicaCORS } from "../../middlewares/politicaCORS";
 
 const handler = nc()
     .put(async (req: any, res: NextApiResponse<RespostaPadraoMsg> | any) => {
@@ -29,4 +30,4 @@ const handler = nc()
     });
 
 
-export default validarTokenJWT(conectaMongoDB(handler));
+export default politicaCORS(validarTokenJWT(conectaMongoDB(handler)));
