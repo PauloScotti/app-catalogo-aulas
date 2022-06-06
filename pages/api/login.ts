@@ -33,7 +33,7 @@ const endpointLogin = async (
                 }
     
                 if(bcrypt.compare(usuarioTeste.senhaValidar, usuariosEncontrados[0].senha)){
-                    console.log("Ok");
+                    console.log("Senha validada com sucesso");
                 }
 
             if(usuarioEncontrado.nivelAcesso === 'Administrador'){
