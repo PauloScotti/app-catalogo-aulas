@@ -7,12 +7,12 @@ import { ModulosModel } from '../../models/ModulosModel';
 import { politicaCORS } from '../../middlewares/politicaCORS';
 
 
-const endpointCadastroAulas = async (
+const handler = nc()
+    .post(async (
     req: NextApiRequest,
     res: NextApiResponse<RespostaPadraoMsg>
 ) => {
 
-    if(req.method === 'POST'){
         const {id} = req.query;
         
         const moduloEncontrado = await ModulosModel.findById(id);
@@ -44,9 +44,34 @@ const endpointCadastroAulas = async (
         await AulasModel.create(aulas);
         return res.status(200).json({ msg: "Aula cadastrada com sucesso"});
 
-    }
+    })
+    .delete(async (req: NextApiRequest, res: NextApiResponse<RespostaPadraoMsg | any[]>) => {
+        try{
+            const {id} = req?.query;
+            const aulas = await AulasModel.findById(id);
 
-    return res.status(405).json({erro : "Método informado não é válido! "});
+            if(!aulas){
+                return res.status(400).json({erro: 'Aula não encontrada'});
+            }
+
+            moduloEncontrado.qtdAulas--;
+            await ModulosModel.findByIdAndUpdate({_id : moduloEncontrado._id}, moduloEncontrado);
+            await AulasModel.findByIdAndDelete({_id : aulas._id}, aulas);
+
+            return res.status(200).json({ msg: "Aulas deletada com sucesso!"});
+
+        } catch(e){
+                console.log(e);
+                return res.status(500).json({erro: 'Não foi possível buscar as aulas'});
+        }
+
+    });
+
+
+export const config = {
+    api: {
+        bodyParser : false
+    }
 }
 
-export default politicaCORS(validarTokenJWT(conectaMongoDB(endpointCadastroAulas)));
+export default politicaCORS(validarTokenJWT(conectaMongoDB(handler)));
