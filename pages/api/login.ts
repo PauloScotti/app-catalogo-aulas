@@ -19,7 +19,7 @@ const endpointLogin = async (
         }
 
         if(req.method === 'POST'){
-        const { login} = req.body;
+        const {login} = req.body;
 
         
         const usuariosEncontrados = await UsuarioModel.find({email: login});
@@ -47,7 +47,7 @@ const endpointLogin = async (
 
         }
 
-        return res.status(400).json({erro : "Usuário ou senha inválidos! "});
+        return res.status(400).json({erro : "Usuário ou senha inválidos!"});
     }
 
 
