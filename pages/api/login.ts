@@ -5,6 +5,7 @@ import { UsuarioModel } from '../../models/UsuarioModel';
 import jwt from 'jsonwebtoken';
 import { LoginResposta } from '../../types/LoignResposta';
 import { politicaCORS } from '../../middlewares/politicaCORS';
+import md5 from 'md5';
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -19,10 +20,10 @@ const endpointLogin = async (
         }
 
         if(req.method === 'POST'){
-        const {login} = req.body;
+        const {login, senha} = req.body;
 
         
-        const usuariosEncontrados = await UsuarioModel.find({email: login});
+        const usuariosEncontrados = await UsuarioModel.find({email: login, senha : md5(senha)});
         
         if( usuariosEncontrados && usuariosEncontrados.length > 0) {
             const usuarioEncontrado = usuariosEncontrados[0];
@@ -35,16 +36,6 @@ const endpointLogin = async (
                 return res.status(200).json({nome: usuarioEncontrado.nome, email: usuarioEncontrado.email, nivelAcesso: usuarioEncontrado.nivelAcesso, token});
             }
 
-        }
-            
-        const bcrypt = require('bcryptjs');
-            const saltTeste = bcrypt.genSaltSync(10);
-                const usuarioTeste = {
-                senhaValidar : bcrypt.hashSync(req.body.senha, saltTeste)
-                }
-    
-        if(bcrypt.compare(usuarioTeste.senhaValidar, usuariosEncontrados[0].senha)){
-            console.log("Senha validada com sucesso");
         }
 
         return res.status(400).json({erro : "Usuário ou senha inválidos!"});

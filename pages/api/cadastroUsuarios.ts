@@ -6,6 +6,7 @@ import { upload, uploadImagemCosmic } from '../../services/uploadImagemCosmic';
 import { conectaMongoDB } from '../../middlewares/conectaMongoDB';
 import nc from 'next-connect';
 import { politicaCORS } from '../../middlewares/politicaCORS';
+import md5 from 'md5';
 
 const handler = nc()
     .use(upload.single('file'))
@@ -47,7 +48,7 @@ const handler = nc()
             const usuarioASerSalvo = {
                 nome : usuario.nome,
                 email : usuario.email,
-                senha : bcrypt.hashSync(usuario.senha, salt),
+                senha : md5(usuario.senha),
                 nivelAcesso : usuario.nivelAcesso,
                 avatar: image?.media?.url
             }
